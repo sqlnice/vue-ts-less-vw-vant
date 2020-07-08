@@ -1,11 +1,11 @@
 import Vue from 'vue';
-import Router from 'vue-router';
+import VueRouter, { RouteConfig } from 'vue-router';
 import Home from './views/Home.vue';
 
-Vue.use(Router);
+Vue.use(VueRouter);
 
-export default new Router({
-  routes: [
+const routes: RouteConfig[] =
+  [
     {
       path: '/',
       name: 'home',
@@ -19,5 +19,25 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/Home.vue'),
     },
-  ],
+  ]
+  ;
+
+const router = new VueRouter({
+  mode: 'history',
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return {
+        x: 0,
+        y: 0
+      };
+    }
+  }
+})
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title;
+  next();
 });
+export default router;
