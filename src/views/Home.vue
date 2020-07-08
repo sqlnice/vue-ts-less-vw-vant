@@ -6,6 +6,8 @@
 </template>
 
 <script lang="ts">
+// 使用window
+declare var window: any;
 import { Component, Watch, Vue } from "vue-property-decorator";
 import { Toast, Field } from "vant";
 
