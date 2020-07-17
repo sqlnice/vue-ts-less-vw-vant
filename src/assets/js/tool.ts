@@ -202,10 +202,6 @@ const tool = {
     var _float = decimals ? stringified.slice(-1 - decimals) : '';
     var sign = value < 0 ? '-' : '';
     return sign + head + _int.slice(i).replace(digitsRE, '$1,') + _float;
-  },
-  // 货币处理2
-  currency2(value: any) {
-    value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  },
+  }
 };
 export default tool;
