@@ -202,6 +202,18 @@ const tool = {
     var _float = decimals ? stringified.slice(-1 - decimals) : '';
     var sign = value < 0 ? '-' : '';
     return sign + head + _int.slice(i).replace(digitsRE, '$1,') + _float;
-  }
+  },
+  // 监测上拉加载
+  scrolltop() {
+    let main: any = document.querySelector('.main');
+    //可滚动容器的高度
+    let innerHeight = main.clientHeight;
+    //屏幕尺寸高度
+    let outerHeight = document.documentElement.clientHeight * 1.2;
+    //可滚动容器超出当前窗口显示范围的高度
+    let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;//兼容各种浏览器和设备;
+    //scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
+    return innerHeight <= outerHeight + scrollTop;
+  },
 };
 export default tool;
