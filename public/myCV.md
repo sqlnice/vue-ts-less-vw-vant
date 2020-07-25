@@ -37,6 +37,7 @@
 
 
 ### 骑手之家小程序/后台
+![Image text](https://github.com/sqlnice/vue-ts-less-vw-vant/blob/master/public/rider.jpg)
   负责项目后台从0到1的开发、技术选型，主要功能有门店管理、电池管理、电池轨迹回放、权限管理等
   后台遇到的难点：
  - 菜单权限，解决方法：在路由meta里面增加roles，获取到用户权限后，根据权限进行处理， 使用router.addRoutes()添加可访问的路由页面。
@@ -45,6 +46,7 @@
  
   小程序端：
   -  仅帮助同事书写过两个静态页面。
+
 
   
 ## 作品
