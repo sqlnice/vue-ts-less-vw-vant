@@ -38,7 +38,7 @@
 
 ### 骑手之家小程序/后台
 
-  <img src="https://github.com/sqlnice/vue-ts-less-vw-vant/blob/master/public/rider.jpg " alt="rider" width=""350>
+![test](https://github.com/sqlnice/vue-ts-less-vw-vant/blob/master/public/rider.jpg) {:height="350" width="350"}
   
   负责项目后台从0到1的开发、技术选型，主要功能有门店管理、电池管理、电池轨迹回放、权限管理等
   后台遇到的难点：
