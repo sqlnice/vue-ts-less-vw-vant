@@ -41,15 +41,11 @@
 <img src="https://github.com/sqlnice/vue-ts-less-vw-vant/blob/master/public/rider.jpg" width="350" height="350" />
   
   负责项目后台从0到1的开发、技术选型，主要功能有门店管理、电池管理、电池轨迹回放、权限管理等
-  后台遇到的难点：
+  遇到的难点：
  - 菜单权限，解决方法：在路由meta里面增加roles，获取到用户权限后，根据权限进行处理， 使用router.addRoutes()添加可访问的路由页面。
  - 按钮权限，解决方法：创建自定义指令，和当前用户权限比较，返回true/false，进行渲染。
  - 对常用功能进行封装，比如svg、翻页组件。
  
-  小程序端：
-  -  仅帮助同事书写过两个静态页面。
-
-
   
 ## 作品
 
