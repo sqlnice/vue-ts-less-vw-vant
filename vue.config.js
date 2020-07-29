@@ -4,7 +4,7 @@ const tsImportPluginFactory = require("ts-import-plugin");
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 module.exports = {
   // 基本路径
   publicPath: "./",
@@ -59,15 +59,17 @@ module.exports = {
         });
         return options;
       });
+    config.plugin('webpack-bundle-analyzer')
+      .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
   },
-  // configureWebpack: {
-  //     externals: {
-  //         'vue': 'Vue',
-  //         'vue-router': 'VueRouter',
-  //         'vuex': 'Vuex',
-  //         'aixos': 'aixos',
-  //         'dayjs': 'dayjs'
-  //     }
-  // },
+  // 从输出的 bundle 中排除依赖
+  configureWebpack: {
+    externals: {
+      // "lodash": '_',
+      // "vue": 'Vue',
+      // "echarts": 'echarts',
+      // "element-ui": 'ELEMENT',
+    }
+  },
   parallel: require("os").cpus().length > 1
 };
