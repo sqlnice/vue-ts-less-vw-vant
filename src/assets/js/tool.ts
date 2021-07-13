@@ -246,6 +246,7 @@ const tool = {
       if (/=/.test(param)) {
         // 处理有 value 的参数
         let [key, val] = param.split("="); // 分割 key 和 value
+        key = key;
         val = decodeURIComponent(val); // 解码
         val = /^\d+$/.test(val) ? parseFloat(val) : val; // 判断是否转为数字
 
@@ -272,20 +273,20 @@ const tool = {
      * currency 货币符号
      * decimals  保留位数
      */
-    const digitsRE = /(\d{3})(?=\d)/g;
-    value = parseFloat(value);
-    if (!isFinite(value) || (!value && value !== 0)) {
-      return value;
-    }
-    // currency = currency != null ? currency : '$'
-    decimals = decimals != null ? decimals : 0;
-    const stringified = Math.abs(value).toFixed(decimals);
-    const _int = decimals ? stringified.slice(0, -1 - decimals) : stringified;
-    const i = _int.length % 3;
-    const head = i > 0 ? _int.slice(0, i) + (_int.length > 3 ? "," : "") : "";
-    const _float = decimals ? stringified.slice(-1 - decimals) : "";
-    const sign = value < 0 ? "-" : "";
-    return sign + head + _int.slice(i).replace(digitsRE, "$1,") + _float;
+    // const digitsRE = /(\d{3})(?=\d)/g;
+    // value = parseFloat(value);
+    // if (!isFinite(value) || (!value && value !== 0)) {
+    //   return value;
+    // }
+    // // currency = currency != null ? currency : '$'
+    // decimals = decimals != null ? decimals : 0;
+    // const stringified = Math.abs(value).toFixed(decimals);
+    // const _int = decimals ? stringified.slice(0, -1 - decimals) : stringified;
+    // const i = _int.length % 3;
+    // const head = i > 0 ? _int.slice(0, i) + (_int.length > 3 ? "," : "") : "";
+    // const _float = decimals ? stringified.slice(-1 - decimals) : "";
+    // const sign = value < 0 ? "-" : "";
+    // return sign + head + _int.slice(i).replace(digitsRE, "$1,") + _float;
   },
   // 监测上拉加载
   scrolltop() {
