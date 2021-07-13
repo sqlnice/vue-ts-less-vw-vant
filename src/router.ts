@@ -1,29 +1,27 @@
-import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
-import Home from './views/Home.vue';
+import Vue from "vue";
+import VueRouter, { RouteConfig } from "vue-router";
+import Home from "./views/Home.vue";
 
 Vue.use(VueRouter);
 
-const routes: RouteConfig[] =
-  [
-    {
-      path: '/',
-      name: 'home',
-      component: Home,
-    },
-    {
-      path: '/home',
-      name: 'home',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Home.vue'),
-    },
-  ]
-  ;
+const routes: RouteConfig[] = [
+  {
+    path: "/",
+    name: "home",
+    component: Home
+  },
+  {
+    path: "/home",
+    name: "home",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ "./views/Home.vue")
+  }
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
@@ -35,7 +33,7 @@ const router = new VueRouter({
       };
     }
   }
-})
+});
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title;
   next();

@@ -1,17 +1,18 @@
 import { Toast } from "vant";
-import router from '@/router';
+import router from "@/router";
 const tool = {
   // 跳转登录页
   // 携带当前页面路由，以期在登录页面完成登录后返回当前页面
   toLogin() {
     // 获取当前路径
     const r: any = router;
-    const curPath: string = r.history.pending ?
-      r.history.pending.fullPath.slice(1) :
-      r.history.current.fullPath.slice(1);
-    const href = process.env.NODE_ENV === 'development' ?
-      'http://192.168.8.245:11942/api/Account/login?redirectUrl=' + curPath :
-      '/api/Account/login?redirectUrl=' + escape(curPath);
+    const curPath: string = r.history.pending
+      ? r.history.pending.fullPath.slice(1)
+      : r.history.current.fullPath.slice(1);
+    const href =
+      process.env.NODE_ENV === "development"
+        ? "http://192.168.8.245:11942/api/Account/login?redirectUrl=" + curPath
+        : "/api/Account/login?redirectUrl=" + escape(curPath);
     window.location.replace(href);
   },
   // 距离目前多久时间
@@ -47,24 +48,69 @@ const tool = {
   },
   // 严格的身份证校验
   isCardID(sId: any) {
-    sId = sId || '';
+    sId = sId || "";
     if (!/(^\d{15}$)|(^\d{17}(\d|X|x)$)/.test(sId)) {
-      Toast('你输入的身份证长度或格式错误');
+      Toast("你输入的身份证长度或格式错误");
       return false;
     }
     // 城市
-    const aCity: any = { 11: "北京", 12: "天津", 13: "河北", 14: "山西", 15: "内蒙古", 21: "辽宁", 22: "吉林", 23: "黑龙江", 31: "上海", 32: "江苏", 33: "浙江", 34: "安徽", 35: "福建", 36: "江西", 37: "山东", 41: "河南", 42: "湖北", 43: "湖南", 44: "广东", 45: "广西", 46: "海南", 50: "重庆", 51: "四川", 52: "贵州", 53: "云南", 54: "西藏", 61: "陕西", 62: "甘肃", 63: "青海", 64: "宁夏", 65: "新疆", 71: "台湾", 81: "香港", 82: "澳门", 91: "国外" };
+    const aCity: any = {
+      11: "北京",
+      12: "天津",
+      13: "河北",
+      14: "山西",
+      15: "内蒙古",
+      21: "辽宁",
+      22: "吉林",
+      23: "黑龙江",
+      31: "上海",
+      32: "江苏",
+      33: "浙江",
+      34: "安徽",
+      35: "福建",
+      36: "江西",
+      37: "山东",
+      41: "河南",
+      42: "湖北",
+      43: "湖南",
+      44: "广东",
+      45: "广西",
+      46: "海南",
+      50: "重庆",
+      51: "四川",
+      52: "贵州",
+      53: "云南",
+      54: "西藏",
+      61: "陕西",
+      62: "甘肃",
+      63: "青海",
+      64: "宁夏",
+      65: "新疆",
+      71: "台湾",
+      81: "香港",
+      82: "澳门",
+      91: "国外"
+    };
     const a: any = parseInt(sId.substr(0, 2), 10);
     if (!aCity[a]) {
-      Toast('你的身份证地区非法');
+      Toast("你的身份证地区非法");
       return false;
     }
 
     // 出生日期
-    const sBirthday = (sId.substr(6, 4) + "-" + Number(sId.substr(10, 2)) + "-" + Number(sId.substr(12, 2))).replace(/-/g, "/");
+    const sBirthday = (
+      sId.substr(6, 4) +
+      "-" +
+      Number(sId.substr(10, 2)) +
+      "-" +
+      Number(sId.substr(12, 2))
+    ).replace(/-/g, "/");
     const d = new Date(sBirthday);
-    if (sBirthday !== (d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate())) {
-      Toast('身份证上的出生日期非法');
+    if (
+      sBirthday !==
+      d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate()
+    ) {
+      Toast("身份证上的出生日期非法");
       return false;
     }
 
@@ -77,7 +123,7 @@ const tool = {
     }
     const last = codes[sum % 11]; // 计算出来的最后一位身份证号码
     if (sId[sId.length - 1] !== last) {
-      Toast('你输入的身份证号非法');
+      Toast("你输入的身份证号非法");
       return false;
     }
 
@@ -85,7 +131,7 @@ const tool = {
   },
   // 港澳通行证
   checkHkongMacao(value: any) {
-    value = value || '';
+    value = value || "";
     const tel = /^[HMhm]{1}([0-9]{8})$/;
     if (tel.test(value)) {
       return true;
@@ -95,10 +141,10 @@ const tool = {
   },
   // 护照规则，5-17位，由数字和字母组成，可以全是字母
   checkPassport(value: any) {
-    value = value || '';
+    value = value || "";
     const tel2 = /^[a-zA-Z]{5,17}$/;
     const tel = /^[a-zA-Z0-9]{5,17}$/;
-    if ((tel.test(value)) || tel2.test(value)) {
+    if (tel.test(value) || tel2.test(value)) {
       return true;
     } else {
       return false;
@@ -106,7 +152,7 @@ const tool = {
   },
   // 台胞证
   checkTaiwCont(value: any) {
-    value = value || '';
+    value = value || "";
     const tel1 = /^[0-9]{8}$/;
     if (tel1.test(value)) {
       return true;
@@ -116,52 +162,57 @@ const tool = {
   },
   // 所有证件严格校验
   idCardNo(value: any) {
-    value = value || '';
-    if (this.isCardID(value) || this.checkHkongMacao(value) || this.checkPassport(value) || this.checkTaiwCont(value)) {
-      Toast('证件通过');
+    value = value || "";
+    if (
+      this.isCardID(value) ||
+      this.checkHkongMacao(value) ||
+      this.checkPassport(value) ||
+      this.checkTaiwCont(value)
+    ) {
+      Toast("证件通过");
       return true;
     } else {
-      Toast('请输入正确的考生证件号码');
+      Toast("请输入正确的考生证件号码");
       return false;
     }
   },
   // 证件有值校验
   idCardNo2(value: any) {
-    value = value || '';
+    value = value || "";
     if (value.length > 0) {
       return true;
     } else {
-      Toast('请输入正确的证件号码');
+      Toast("请输入正确的证件号码");
       return false;
     }
   },
   // 手机号校验
   isPhone(phone: any) {
-    phone = phone || '';
+    phone = phone || "";
     if (/^1[3|4|5|6|7|8|9][0-9]{9}$/.test(phone)) {
       return true;
     } else {
-      Toast('请输入正确的手机号码');
+      Toast("请输入正确的手机号码");
       return false;
     }
   },
   // 验证码校验
   isCode(value: any) {
-    value = value || '';
+    value = value || "";
     if (value.length > 0) {
       return true;
     } else {
-      Toast('请输入验证码');
+      Toast("请输入验证码");
       return false;
     }
   },
   // 姓名校验
   isName(value: any) {
-    value = value || '';
+    value = value || "";
     if (value.length > 0) {
       return true;
     } else {
-      Toast('请输入姓名');
+      Toast("请输入姓名");
       return false;
     }
   },
@@ -172,7 +223,7 @@ const tool = {
     const reg = /[?&][^?&]+=[^?&]+/g;
     const arr = url.match(reg); // return ["?id=123456","&a=b"]
     if (arr) {
-      arr.forEach((item) => {
+      arr.forEach(item => {
         const tempArr = item.substring(1).split("=");
         const key = tempArr[0];
         const val = tempArr[1];
@@ -183,11 +234,13 @@ const tool = {
   },
   // 解析 URL Params 为对象
   parseParam(url: string) {
-    let reg: any = /.+\?(.+)$/;
-    if (!reg.exec(url)) return;
+    const reg: any = /.+\?(.+)$/;
+    if (!reg.exec(url)) {
+      return;
+    }
     const paramsStr = reg.exec(url)[1]; // 将 ? 后面的字符串取出来
     const paramsArr = paramsStr.split("&"); // 将字符串以 & 分割后存到数组中
-    let paramsObj: any = {};
+    const paramsObj: any = {};
     // 将 params 存到对象中
     paramsArr.forEach((param: any) => {
       if (/=/.test(param)) {
@@ -215,36 +268,39 @@ const tool = {
   // 货币处理1
   currency(value: any, decimals: number) {
     /**
-    * value  金额
-    * currency 货币符号
-    * decimals  保留位数
-    */
+     * value  金额
+     * currency 货币符号
+     * decimals  保留位数
+     */
     const digitsRE = /(\d{3})(?=\d)/g;
     value = parseFloat(value);
-    if (!isFinite(value) || (!value && value !== 0)) return value;
+    if (!isFinite(value) || (!value && value !== 0)) {
+      return value;
+    }
     // currency = currency != null ? currency : '$'
     decimals = decimals != null ? decimals : 0;
-    var stringified = Math.abs(value).toFixed(decimals);
-    var _int = decimals
-      ? stringified.slice(0, -1 - decimals)
-      : stringified;
-    var i = _int.length % 3;
-    var head = i > 0 ? (_int.slice(0, i) + (_int.length > 3 ? ',' : '')) : '';
-    var _float = decimals ? stringified.slice(-1 - decimals) : '';
-    var sign = value < 0 ? '-' : '';
-    return sign + head + _int.slice(i).replace(digitsRE, '$1,') + _float;
+    const stringified = Math.abs(value).toFixed(decimals);
+    const _int = decimals ? stringified.slice(0, -1 - decimals) : stringified;
+    const i = _int.length % 3;
+    const head = i > 0 ? _int.slice(0, i) + (_int.length > 3 ? "," : "") : "";
+    const _float = decimals ? stringified.slice(-1 - decimals) : "";
+    const sign = value < 0 ? "-" : "";
+    return sign + head + _int.slice(i).replace(digitsRE, "$1,") + _float;
   },
   // 监测上拉加载
   scrolltop() {
-    let main: any = document.querySelector('.main');
-    //可滚动容器的高度
-    let innerHeight = main.clientHeight;
-    //屏幕尺寸高度
-    let outerHeight = document.documentElement.clientHeight * 1.2;
-    //可滚动容器超出当前窗口显示范围的高度
-    let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;//兼容各种浏览器和设备;
-    //scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
+    const main: any = document.querySelector(".main");
+    // 可滚动容器的高度
+    const innerHeight = main.clientHeight;
+    // 屏幕尺寸高度
+    const outerHeight = document.documentElement.clientHeight * 1.2;
+    // 可滚动容器超出当前窗口显示范围的高度
+    const scrollTop =
+      document.documentElement.scrollTop ||
+      window.pageYOffset ||
+      document.body.scrollTop; // 兼容各种浏览器和设备;
+    // scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
     return innerHeight <= outerHeight + scrollTop;
-  },
+  }
 };
 export default tool;

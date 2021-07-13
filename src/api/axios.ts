@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { Toast } from 'vant';
-import tool from '@/assets/js/tool';
+import axios from "axios";
+import { Toast } from "vant";
+import tool from "@/assets/js/tool";
 
 // const errCodeDec: any = {
 //   6000: '请先进行实名登记',
@@ -18,12 +18,12 @@ const errorHandle = (status: any, response: any) => {
     case 401:
       // 跳转登录页
       // 携带当前页面路由，以期在登录页面完成登录后返回当前页面
-      window.sessionStorage.removeItem('token');
+      window.sessionStorage.removeItem("token");
       tool.toLogin();
       break;
     // 404请求不存在
     case 404:
-      Toast('请求的资源不存在');
+      Toast("请求的资源不存在");
       break;
     case 400:
       // let msg = errCodeDec[response.statusCodeDes];
@@ -33,7 +33,7 @@ const errorHandle = (status: any, response: any) => {
       Toast(response.statusCodeDes);
       break;
     case 502:
-      Toast('服务器开小差啦，请稍后再试~');
+      Toast("服务器开小差啦，请稍后再试~");
       break;
     default:
       // msg = errCodeDec[response.statusCode];
@@ -48,7 +48,8 @@ const errorHandle = (status: any, response: any) => {
 // 创建axios实例
 const instance = axios.create({ timeout: 1000 * 16 });
 // 设置post请求头
-instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+instance.defaults.headers.post["Content-Type"] =
+  "application/x-www-form-urlencoded";
 
 // 请求拦截器
 // 每次请求前，如果存在token则在请求头中携带token
@@ -62,24 +63,24 @@ instance.interceptors.request.use(
         duration: 0
       });
     }
-    const token = window.sessionStorage.getItem('token');
+    const token = window.sessionStorage.getItem("token");
     if (token) {
-      config.headers.Authorization = 'Bearer ' + token;
+      config.headers.Authorization = "Bearer " + token;
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  error => Promise.reject(error)
 );
 
 // 响应拦截器
 instance.interceptors.response.use(
   // 请求成功
-  (res) => {
+  res => {
     Toast.clear();
     return res.status === 200 ? Promise.resolve(res) : Promise.reject(res);
   },
   // 请求失败
-  (error) => {
+  error => {
     Toast.clear();
     const { response } = error;
     if (response) {

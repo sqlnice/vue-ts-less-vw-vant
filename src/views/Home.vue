@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="container">{{title}}1</div>
+    <div class="container">{{ title }}1</div>
     <van-field v-model="title" label="文本" placeholder="请输入用户名" />
   </div>
 </template>
